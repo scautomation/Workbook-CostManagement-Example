@@ -1,0 +1,114 @@
+{
+    "version": "Notebook/1.0",
+    "items": [
+      {
+        "type": 9,
+        "content": {
+          "version": "KqlParameterItem/1.0",
+          "parameters": [
+            {
+              "id": "ee507714-9934-47eb-87e2-79857919b101",
+              "version": "KqlParameterItem/1.0",
+              "name": "Subscription",
+              "type": 6,
+              "isRequired": true,
+              "multiSelect": true,
+              "quote": "'",
+              "delimiter": ",",
+              "value": [
+                "/subscriptions/ebb79bc0-aa86-44a7-8111-cabbe0c43993"
+              ],
+              "typeSettings": {
+                "additionalResourceOptions": [
+                  "value::1"
+                ],
+                "includeAll": true,
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "defaultValue": "value::1"
+            },
+            {
+              "id": "910c7952-f49c-42d0-91b2-ad679f8b0785",
+              "version": "KqlParameterItem/1.0",
+              "name": "Environment",
+              "type": 2,
+              "isRequired": true,
+              "multiSelect": true,
+              "quote": "\"",
+              "delimiter": ",",
+              "query": "resources | distinct tostring(tags.Demo_Environment)\r\n| where tags_Demo_Environment != \"\"",
+              "crossComponentResources": [
+                "{Subscription}"
+              ],
+              "value": [
+                "Prod"
+              ],
+              "typeSettings": {
+                "additionalResourceOptions": [
+                  "value::1",
+                  "value::all"
+                ],
+                "showDefault": false
+              },
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            {
+              "id": "8756cae2-db95-442f-937d-e6d1c86e63ab",
+              "version": "KqlParameterItem/1.0",
+              "name": "Aggregation",
+              "type": 2,
+              "isRequired": true,
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "jsonData": "[\r\n { \"value\": \"ResourceGroup\", \"label\": \"Resource Group\"},\r\n { \"value\": \"SubscriptionId\", \"label\": \"Subscription\", \"selected\":true },\r\n { \"value\": \"ResourceType\", \"label\": \"Resource Type\"}\r\n]",
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "value": "ResourceGroup"
+            },
+            {
+              "id": "de00734d-a605-43bf-aa5a-707fd5f23a06",
+              "version": "KqlParameterItem/1.0",
+              "name": "TimeFrame",
+              "type": 2,
+              "typeSettings": {
+                "additionalResourceOptions": [],
+                "showDefault": false
+              },
+              "jsonData": "[\r\n { \"value\": \"BillingMonthToDate\", \"label\": \"Billing MonthToDate\"},\r\n { \"value\": \"MonthToDate\", \"label\": \"MonthToDate\", \"selected\":true },\r\n { \"value\": \"TheLastBillingMonth\", \"label\": \"Last Billing Month\"},\r\n { \"value\": \"TheLastMonth\", \"label\": \"Last Month\"},\r\n { \"value\": \"WeekToDate\", \"label\": \"WeekToDate\"}\r\n]",
+              "timeContext": {
+                "durationMs": 86400000
+              }
+            }
+          ],
+          "style": "pills",
+          "queryType": 0,
+          "resourceType": "microsoft.operationalinsights/workspaces"
+        },
+        "name": "parameters - 1"
+      },
+      {
+        "type": 3,
+        "content": {
+          "version": "KqlItem/1.0",
+          "query": "{\"version\":\"ARMEndpoint/1.0\",\"data\":\" {\\r\\n   \\\"type\\\": \\\"Usage\\\",\\r\\n   \\\"timeframe\\\": \\\"{TimeFrame}\\\",\\r\\n   \\\"dataset\\\": {\\r\\n     \\\"granularity\\\": \\\"None\\\",\\r\\n     \\\"filter\\\": {\\r\\n                 \\\"tags\\\" : {\\r\\n                     \\\"name\\\" : \\\"Demo_Environment\\\",\\r\\n                     \\\"operator\\\" : \\\"In\\\",\\r\\n                     \\\"values\\\" : [\\r\\n                        {Environment}\\r\\n                     ]\\r\\n                 }\\r\\n     },\\r\\n     \\\"aggregation\\\": {\\r\\n       \\\"totalCost\\\": {\\r\\n         \\\"name\\\": \\\"PreTaxCost\\\",\\r\\n         \\\"function\\\": \\\"Sum\\\"\\r\\n       }\\r\\n     },\\r\\n     \\\"grouping\\\": [\\r\\n       {\\r\\n         \\\"type\\\": \\\"Dimension\\\",\\r\\n         \\\"name\\\": \\\"{Aggregation}\\\"\\r\\n       }\\r\\n     ]\\r\\n   }\\r\\n }\",\"headers\":[],\"method\":\"POST\",\"path\":\"/subscriptions/{Subscription:id}/providers/Microsoft.CostManagement/query?\",\"urlParams\":[{\"key\":\"api-version\",\"value\":\"2019-11-01\"}],\"batchDisabled\":true,\"transformers\":[{\"type\":\"jsonpath\",\"settings\":{\"tablePath\":\"$.properties\",\"columns\":[]}}]}",
+          "size": 0,
+          "queryType": 12
+        },
+        "name": "query - 0"
+      }
+    ],
+    "fallbackResourceIds": [
+      "azure monitor"
+    ],
+    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+  }
