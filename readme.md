@@ -1,6 +1,7 @@
 # Azure Cost Management Example Workbook
 
 ## Related Blog Post
+https://techcommunity.microsoft.com/t5/itops-talk-blog/customize-cost-data-visualizations-with-azure-workbooks-and/ba-p/2387779
 
 
 ## Purpose
